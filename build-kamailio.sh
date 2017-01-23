@@ -18,9 +18,7 @@ git checkout ${GITREF}
 
 echo "Building Kamailio $VERSION packages"
 
-git archive --output /root/rpmbuild/SOURCES/kamailio-${VERSION}_src.tar.gz --prefix=kamailio-${VERSION}/  $GITREF
-
-cd /root
+git archive --output rpmbuild/SOURCES/kamailio-${VERSION}_src.tar.gz --prefix=kamailio-${VERSION}/  $GITREF
 
 cp kamailio.spec rpmbuild/SPECS/
 
