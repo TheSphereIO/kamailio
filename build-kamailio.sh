@@ -3,8 +3,6 @@
 GITREF="master"
 VERSION="5.0.0"
 
-cd /root
-
 mkdir -p rpmbuild/SOURCES
 mkdir -p rpmbuild/RPMS
 mkdir -p rpmbuild/SPECS
