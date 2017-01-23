@@ -24,4 +24,5 @@ cd ..
 cp kamailio.spec rpmbuild/SPECS/
 
 # now build the rpms
-rpmbuild -bb rpmbuild/SPECS/kamailio.spec
+cd rpmbuild
+rpmbuild  --define "_topdir `pwd`" -bb ./SPECS/kamailio.spec
