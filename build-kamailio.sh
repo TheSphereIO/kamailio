@@ -27,12 +27,16 @@ TAG=`git tag --points-at ${LASTCOMMIT}`
 if [ ! -z "$TAG" ]                                                                                                                                                                           
 then                                                                                                                                                                                         
     VERSION=${TAG}                                                                                                                                                                       
+    RELEASE="0"
 else                                                                                                                                                                                         
     VERSION=`git describe --always`                                                                                                                                                      
-    VERSION=${VERSION//-/.}                                                                                                                                                                  
+    REL=${VERSION#*-}             
+    
+    VERSION=${VERSION%%-*}                                                                                                                                                                  
+    RELEASE=${REL//-/.}                                                                                                                                                 
 fi
 
-echo "Building Kamailio $VERSION packages"
+echo "Building Kamailio $VERSION-$RELEASE packages"
 
 git archive --output ../rpmbuild/SOURCES/kamailio-${VERSION}_src.tar.gz --prefix=kamailio-${VERSION}/  $GITREF
 cd ..
@@ -40,7 +44,7 @@ cd ..
 #cp kamailio/pkg/kamailio/centos/7/kamailio.spec rpmbuild/SPECS/
 cp kamailio/pkg/kamailio/centos/7/kamailio.spec .
 sed -i "s/%define ver.*/%define ver ${VERSION}/g" kamailio.spec
-sed -i "s/%define rel.*//g" kamailio.spec
+sed -i "s/%define rel.*/%define rel ${RELEASE}/g" kamailio.spec
 
 # now build the rpms
 rpmbuild  --define "_topdir `pwd`/rpmbuild" -bb kamailio.spec
