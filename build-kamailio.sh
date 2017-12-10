@@ -21,19 +21,18 @@ fi
 
 git checkout ${GITREF}
 
-LASTCOMMIT=$(git rev-parse --short HEAD)                                                                                                                                                     
-TAG=`git tag --points-at ${LASTCOMMIT}`                                                                                                                                                      
-                                                                                                                                                                                             
-if [ ! -z "$TAG" ]                                                                                                                                                                           
-then                                                                                                                                                                                         
-    VERSION=${TAG}                                                                                                                                                                       
+LASTCOMMIT=$(git rev-parse --short HEAD) 
+TAG=`git tag --points-at ${LASTCOMMIT}`
+if [ ! -z "$TAG" ]
+then
+    VERSION=${TAG}
     RELEASE="0"
-else                                                                                                                                                                                         
-    VERSION=`git describe --always`                                                                                                                                                      
+else
+    VERSION=`git describe --always`
     REL=${VERSION#*-}             
     
-    VERSION=${VERSION%%-*}                                                                                                                                                                  
-    RELEASE=${REL//-/.}                                                                                                                                                 
+    VERSION=${VERSION%%-*}
+    RELEASE=${REL//-/.}
 fi
 
 echo "Building Kamailio $VERSION-$RELEASE packages"
